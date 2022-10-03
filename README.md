@@ -1,0 +1,2 @@
+# Hafner.Tools.SetTracker
+Repository SetTracker provides a tiny helper type of the same name that can be used to differentiate between whether a parameter/property was set to null or was not set at all. Useful for filters (null not set = do not apply any filter for that property, null set = return all records that have null in that column)  or UpdateRecord methods (null not set = don't touch that value, null set = change the value to null) etc.
