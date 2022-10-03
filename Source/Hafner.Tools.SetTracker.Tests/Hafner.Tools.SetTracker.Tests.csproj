@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp3.0;netcoreapp2.2;netcoreapp2.1;net48;net472;net471;net47;net462;net461;net46;net452;net451;net45</TargetFrameworks>
@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Hafner.Tools.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
+    <Configurations>Debug</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
