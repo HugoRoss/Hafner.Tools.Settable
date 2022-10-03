@@ -26,16 +26,16 @@
     <!--    1.2.3.0  =>  1.2.4.0  if no interface changes have been performed (patch, bug-fix) -->
     <!--    1.2.3.0  =>  1.3.0.0  if new interfaces have been added (feature release) -->
     <!--    1.2.3.0  =>  2.0.0.0  if existing interfaces have been modified (breaking changes) -->
-    <Version>1.0.0.0</Version>
+    <Version>2.0.0.0</Version>
     <!-- Set to <major>.<minor>.0.0 of the <Version> element -->
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <!-- Set to <major>.<minor>.<patch>.0 of the <Version> element -->
-    <FileVersion>1.0.0.0</FileVersion>
+    <FileVersion>2.0.0.0</FileVersion>
     <Copyright>Copyright (C) 2022 by Christoph Hafner</Copyright>
     <Description>The package "SetTracker" provides a tiny helper type of the same name that can be used to differentiate between whether a parameter/property was set to null or was not set at all. Useful for filters (null not set = do not apply any filter for that property, null set = return all records that have null in that column)  or UpdateRecord methods (null not set = don't touch that value, null set = change the value to null) etc.</Description>
     <!--<PackageIcon>ToBeDefined.png</PackageIcon>-->
     <PackageTags>SetTracker Hafner.Tools.SetTracker</PackageTags>
-    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>Conditional package references to Hafner.Compatibility.NullableReferenceTypeAttributes und Hafner.Compatibility.GuidAttribute eliminated and classes as internal types implemented to avoid conflicts for consumers that import these attributes from somewhere else.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/HugoRoss/Hafner.Tools.SetTracker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HugoRoss/Hafner.Tools.SetTracker</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -46,11 +46,21 @@
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <ItemGroup Condition="$(FrameworksLackingGuidAttribute.Contains('|$(TargetFramework)|'))">
-    <PackageReference Include="Hafner.Compatibility.GuidAttribute" Version="1.0.2" />
+  <ItemGroup>
+    <Folder Include="NullableAttributes\" />
+    <Compile Remove="NullableAttributes\**\*.cs" />
+    <Content Include="NullableAttributes\**\*.cs" />
+    <Folder Include="GuidAttribute\" />
+    <Compile Remove="GuidAttribute\**\*.cs" />
+    <Content Include="GuidAttribute\**\*.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(FrameworksLackingNullableAttributes.Contains('|$(TargetFramework)|'))">
-    <PackageReference Include="Hafner.Compatibility.NullableReferenceTypeAttributes" Version="1.0.0" />
+    <Content Remove="NullableAttributes\**\*.cs" />
+    <Compile Include="NullableAttributes\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(FrameworksLackingGuidAttribute.Contains('|$(TargetFramework)|'))">
+    <Content Remove="GuidAttribute\**\*.cs" />
+    <Compile Include="GuidAttribute\**\*.cs" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="@ECHO OFF&#xD;&#xA;&#xD;&#xA;REM Change to project folder&#xD;&#xA;PUSHD &quot;$(ProjectDir)&quot;&#xD;&#xA;&#xD;&#xA;IF /I &quot;$(ConfigurationName)&quot; NEQ &quot;NuGet&quot; GOTO EOF&#xD;&#xA;IF /I &quot;$(TargetFramework)&quot; NEQ &quot;Net6.0&quot; GOTO EOF&#xD;&#xA;&#xD;&#xA;ECHO Deleting old NuGet packages...&#xD;&#xA;DEL &quot;$(ProjectDir)*.nupkg&quot; /S /Q&#xD;&#xA;&#xD;&#xA;:EOF&#xD;&#xA;" />
