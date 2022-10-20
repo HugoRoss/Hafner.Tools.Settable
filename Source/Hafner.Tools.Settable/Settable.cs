@@ -9,16 +9,16 @@ namespace Hafner.Tools {
     /// Useful for filters (null not set = do not apply any filter for that property, null set = return all records that have null
     /// in that column) or UpdateRecord methods (null not set = don't touch that value, null set = change the value to null) etc.
     /// </summary>
-    /// <typeparam name="T">The underlying type of the <see cref="SetTracker{T}" />.</typeparam>
-    public struct SetTracker<T> {
+    /// <typeparam name="T">The underlying type of the <see cref="Settable{T}" />.</typeparam>
+    public struct Settable<T> {
 
         /// <summary>
-        /// Constructs a new <see cref="SetTracker{T}" /> with the given value. Property <see cref="IsSet" /> is <see
+        /// Constructs a new <see cref="Settable{T}" /> with the given value. Property <see cref="IsSet" /> is <see
         /// langword="true" /> afterwards, regardless whether the value was <see langword="null" /> or not. This constructor is
         /// called by the implicit conversion operator which is the common way to assign a value.
         /// </summary>
         /// <param name="value">The value to be set.</param>
-        public SetTracker(T? value) {
+        public Settable(T? value) {
             IsSet = true;
             _value = value;
         }
@@ -36,12 +36,12 @@ namespace Hafner.Tools {
         }
 
         /// <summary>
-        /// Implicit conversion from the underlying type to this <see cref="SetTracker{T}"/> which calls thge <see cref="SetTracker(T?)">constructor</see>.
+        /// Implicit conversion from the underlying type to this <see cref="Settable{T}"/> which calls thge <see cref="Settable(T?)">constructor</see>.
         /// </summary>
         /// <param name="value"></param>
         [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates", Justification = "The constructor can be used if the language does not support implicit conversions.")]
-        public static implicit operator SetTracker<T>(T? value) {
-            return new SetTracker<T>(value);
+        public static implicit operator Settable<T>(T? value) {
+            return new Settable<T>(value);
         }
 
         /// <inheritdoc cref="Object.ToString()" />
@@ -54,7 +54,7 @@ namespace Hafner.Tools {
 
         public override bool Equals([NotNullWhen(true)] object? obj) {
             if (obj is null) return false;
-            if (obj is not SetTracker<T> other) return false;
+            if (obj is not Settable<T> other) return false;
             if (IsSet != other.IsSet) return false;
             if (!IsSet) return true;
             return Object.Equals(Value, other.Value);

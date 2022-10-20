@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hafner.Tools.SetTracker\Hafner.Tools.SetTracker.csproj" />
+    <ProjectReference Include="..\Hafner.Tools.Settable\Hafner.Tools.Settable.csproj" />
   </ItemGroup>
 
 </Project>

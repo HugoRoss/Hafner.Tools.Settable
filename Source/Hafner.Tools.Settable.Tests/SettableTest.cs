@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Hafner.Tools.Tests {
 
     [TestClass]
-    public class SetTrackerTest {
+    public class SettableTest {
 
         [TestMethod]
-        public void SetTrackerUsage() {
+        public void SettableUsage() {
             //Arrange
             FilterDefinition expected;
             FilterDefinition actual;
@@ -60,7 +60,7 @@ namespace Hafner.Tools.Tests {
             AssertOkay(expected, actual);
         }
 
-        private static FilterDefinition GetFilter(SetTracker<string?> givenNameFilter = default, SetTracker<string?> middleNameFilter = default, SetTracker<string?> surnameFilter = default, SetTracker<DateTime> creationDateFromFilter = default, SetTracker<DateTime> creationDateToFilter = default) {
+        private static FilterDefinition GetFilter(Settable<string?> givenNameFilter = default, Settable<string?> middleNameFilter = default, Settable<string?> surnameFilter = default, Settable<DateTime> creationDateFromFilter = default, Settable<DateTime> creationDateToFilter = default) {
             FilterDefinition result = new FilterDefinition();
             if (givenNameFilter.IsSet) {
                 result.GivenNameFilter = givenNameFilter.Value;
@@ -101,11 +101,11 @@ namespace Hafner.Tools.Tests {
 
         private class FilterDefinition {
 
-            public SetTracker<string?> GivenNameFilter { get; set; }
-            public SetTracker<string?> MiddleNameFilter { get; set; }
-            public SetTracker<string?> SurnameFilter { get; set; }
-            public SetTracker<DateTime> CreationDateFromFilter { get; set; }
-            public SetTracker<DateTime> CreationDateToFilter { get; set; }
+            public Settable<string?> GivenNameFilter { get; set; }
+            public Settable<string?> MiddleNameFilter { get; set; }
+            public Settable<string?> SurnameFilter { get; set; }
+            public Settable<DateTime> CreationDateFromFilter { get; set; }
+            public Settable<DateTime> CreationDateToFilter { get; set; }
 
             public override bool Equals(object? obj) {
                 if (obj is null) return false;
