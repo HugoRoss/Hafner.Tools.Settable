@@ -10,7 +10,7 @@ namespace Hafner.Tools {
     /// in that column) or UpdateRecord methods (null not set = don't touch that value, null set = change the value to null) etc.
     /// </summary>
     /// <typeparam name="T">The underlying type of the <see cref="Settable{T}" />.</typeparam>
-    public struct Settable<T> {
+    public struct Settable<T> : ISettable {
 
         /// <summary>
         /// Constructs a new <see cref="Settable{T}" /> with the given value. Property <see cref="IsSet" /> is <see
@@ -35,8 +35,14 @@ namespace Hafner.Tools {
             }
         }
 
+        /// <inheritdoc cref="ISettable.Value" />
+        object? ISettable.Value => this.Value;
+
+        /// <inheritdoc cref="ISettable.UnderlyingType" />
+        Type ISettable.UnderlyingType => typeof(T);
+
         /// <summary>
-        /// Implicit conversion from the underlying type to this <see cref="Settable{T}"/> which calls thge <see cref="Settable(T?)">constructor</see>.
+        /// Implicit conversion from the underlying type to this <see cref="Settable{T}"/> which calls the <see cref="Settable(T?)">constructor</see>.
         /// </summary>
         /// <param name="value"></param>
         [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates", Justification = "The constructor can be used if the language does not support implicit conversions.")]
