@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1;netcoreapp3.0;netcoreapp2.2;netcoreapp2.1;netcoreapp2.0;netcoreapp1.1;netcoreapp1.0;netstandard2.1;netstandard2.0;netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;netstandard1.2;netstandard1.1;netstandard1.0;net48;net472;net471;net47;net462;net461;net46;net452;net451;net45;net403;net40;net35;net30;net20</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1;netcoreapp3.0;netcoreapp2.2;netcoreapp2.1;netcoreapp2.0;netstandard2.1;netstandard2.0;net48;net472;net471;net47;net462;net461</TargetFrameworks>
     <FrameworksTemplate>|net20|net30|net35|net40|net403|net45|net451|net452|net46|net461|net462|net47|net471|net472|net48|netcoreapp1.0|netcoreapp1.1|netcoreapp2.0|netcoreapp2.1|netcoreapp2.2|netcoreapp3.0|netcoreapp3.1|net5.0|net6.0|net7.0|netstandard1.0|netstandard1.1|netstandard1.2|netstandard1.3|netstandard1.4|netstandard1.5|netstandard1.6|netstandard2.0|netstandard2.1|</FrameworksTemplate>
-    <FrameworksLackingGuidAttribute>|netstandard1.0|</FrameworksLackingGuidAttribute>
     <FrameworksLackingNullableAttributes>|net20|net30|net35|net40|net403|net45|net451|net452|net46|net461|net462|net47|net471|net472|net48|netcoreapp1.0|netcoreapp1.1|netcoreapp2.0|netcoreapp2.1|netcoreapp2.2|netstandard1.0|netstandard1.1|netstandard1.2|netstandard1.3|netstandard1.4|netstandard1.5|netstandard1.6|netstandard2.0|</FrameworksLackingNullableAttributes>
+    <FrameworksSupportingDateTimeOnly>|net6.0|net7.0|</FrameworksSupportingDateTimeOnly>
     <Configurations>Debug;Release;NuGet</Configurations>
     <ConfigurationsThatPackage>|NuGet|</ConfigurationsThatPackage>
     <OutputType>Library</OutputType>
@@ -26,16 +26,25 @@
     <!--    1.2.3.0  =>  1.2.4.0  if no interface changes have been performed (patch, bug-fix) -->
     <!--    1.2.3.0  =>  1.3.0.0  if new interfaces have been added (feature release) -->
     <!--    1.2.3.0  =>  2.0.0.0  if existing interfaces have been modified (breaking changes) -->
-    <Version>3.2.0.0</Version>
+    <Version>1.0.0.0</Version>
     <!-- Set to <major>.<minor>.0.0 of the <Version> element -->
-    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <!-- Set to <major>.<minor>.<patch>.0 of the <Version> element -->
-    <FileVersion>3.2.0.0</FileVersion>
+    <FileVersion>1.0.0.0</FileVersion>
     <Copyright>Copyright (C) 2022 by Christoph Hafner</Copyright>
-    <Description>The package "Hafner.Tools.Settable" (formerly "Hafner.Tools.SetTracker") provides a tiny helper type of the same name that can be used to differentiate between whether a parameter/property was set to null or was not set at all. Useful for filters (null not set = do not apply any filter for that property, null set = return all records that have null in that column) or UpdateRecord methods (null not set = don't touch that value, null set = change the value to null) etc. Also helpful in data transfer objects (DTOs) that are declared with nullable reference types enabled.</Description>
+    <Description>The package "Hafner.Tools.Settable.Dapper" is a Dapper extension to handle conversions from Dapper to Settable&lt;T&gt; correctly.
+
+There are two functionally identical methods that may be called:
+
+Either you invoke the extension method that appears on the connection (IDbConnection) like this before every call of a dapper extension method (preferred if you don't have an application's entry point e.g. because it's a library):
+connection.EnsureSettableConvertersLoaded();
+
+or you call method once when the application is starting up (multiple calls are ignored and do not affect performance negatively):
+SettableExtensionForDapper.LoadConverters();
+    </Description>
     <!--<PackageIcon>ToBeDefined.png</PackageIcon>-->
-    <PackageTags>Settable Hafner.Tools Hafner.Tools.Settable ISettable Hafner.Tools.ISettable SetTracker Hafner.Tools.SetTracker DTO nullable</PackageTags>
-    <PackageReleaseNotes>Support for .NET 7.0 added.</PackageReleaseNotes>
+    <PackageTags>Settable Hafner.Tools Hafner.Tools.Settable ISettable Hafner.Tools.ISettable SetTracker Hafner.Tools.SetTracker DTO nullable reference types Dapper.</PackageTags>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/HugoRoss/Hafner.Tools.SetTracker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HugoRoss/Hafner.Tools.SetTracker</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -47,24 +56,42 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="NullableAttributes\" />
     <Compile Remove="NullableAttributes\**\*.cs" />
     <None Include="NullableAttributes\**\*.cs" />
-    <Compile Remove="GuidAttribute\**\*.cs" />
-    <None Include="GuidAttribute\**\*.cs" />
+    <Compile Remove="DateTimeOnly\**\*.cs" />
+    <None Include="DateTimeOnly\**\*.cs" />
+    <Compile Remove="DateTimeOnlyNotSupported\**\*.cs" />
+    <None Include="DateTimeOnlyNotSupported\**\*.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(FrameworksLackingNullableAttributes.Contains('|$(TargetFramework)|'))">
-    <None Remove="NullableAttributes\**\*.cs" />
     <Compile Include="NullableAttributes\**\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(FrameworksLackingGuidAttribute.Contains('|$(TargetFramework)|'))">
-    <None Remove="GuidAttribute\**\*.cs" />
-    <Compile Include="GuidAttribute\**\*.cs" />
+  <Choose>
+    <When Condition="$(FrameworksSupportingDateTimeOnly.Contains('|$(TargetFramework)|'))">
+      <ItemGroup>
+        <None Remove="DateTimeOnly\**\*.cs" />
+        <Compile Include="DateTimeOnly\**\*.cs" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <None Remove="DateTimeOnlyNotSupported\**\*.cs" />
+        <Compile Include="DateTimeOnlyNotSupported\**\*.cs" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <ProjectReference Include="..\Hafner.Tools.Settable\Hafner.Tools.Settable.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper">
+      <Version>2.0.123</Version>
+    </PackageReference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="@ECHO OFF&#xD;&#xA;&#xD;&#xA;REM Change to project folder&#xD;&#xA;PUSHD &quot;$(ProjectDir)&quot;&#xD;&#xA;&#xD;&#xA;IF /I &quot;$(ConfigurationName)&quot; NEQ &quot;NuGet&quot; GOTO EOF&#xD;&#xA;IF /I &quot;$(TargetFramework)&quot; NEQ &quot;Net7.0&quot; GOTO EOF&#xD;&#xA;&#xD;&#xA;ECHO Deleting old NuGet packages...&#xD;&#xA;DEL &quot;$(ProjectDir)*.nupkg&quot; /S /Q&#xD;&#xA;&#xD;&#xA;:EOF&#xD;&#xA;" />
   </Target>
   <Target Name="PostPackaging" AfterTargets="Pack" Condition="'$(Configuration)' == 'NuGet'">
-    <Exec Command="@ECHO OFF&#xD;&#xA;REM Publish the NuGet package&#xD;&#xA;FOR /R %25%25a IN (Hafner.Tools.Settable.*.*.*.nupkg) DO NUGET push %25%25a -Source https://api.nuget.org/v3/index.json&#xD;&#xA;&#xD;&#xA;" />
+    <Exec Command="@ECHO OFF&#xD;&#xA;PUSHD &quot;$(TargetDir)&quot;&#xD;&#xA;REM Publish the NuGet package&#xD;&#xA;FOR /R %25%25a IN (Hafner.Tools.Settable.Dapper.*.*.*.nupkg) DO NUGET push %25%25a -Source https://api.nuget.org/v3/index.json&#xD;&#xA;" />
   </Target>
 </Project>
