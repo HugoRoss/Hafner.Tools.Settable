@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <NoWarn>CA1510;CA1720;CS1591;CS1701;IDE0079;NETSDK1138;NU1901;NU1902;NU1903;NU1904</NoWarn>
+    <ImplicitUsings>false</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Hafner.Tools.Settable.Tests</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <Configurations>Debug</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="[2.2.8]" />
+    <PackageReference Include="MSTest.TestFramework" Version="[2.2.8]" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hafner.Tools.Settable.Tests.Common\Hafner.Tools.Settable.Tests.Common.csproj" />
+    <ProjectReference Include="..\Hafner.Tools.Settable\Hafner.Tools.Settable.csproj" />
+  </ItemGroup>
+
+</Project>

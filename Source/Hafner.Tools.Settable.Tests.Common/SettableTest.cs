@@ -3,11 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hafner.Tools.Tests {
 
-    [TestClass]
     public class SettableTest {
 
-        [TestMethod]
-        public void SettableUsage() {
+        public virtual void SettableUsage() {
             //Arrange
             FilterDefinition expected;
             FilterDefinition actual;

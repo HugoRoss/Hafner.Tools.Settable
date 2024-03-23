@@ -10,7 +10,8 @@ namespace Hafner.Tools {
     /// in that column) or UpdateRecord methods (null not set = don't touch that value, null set = change the value to null) etc.
     /// </summary>
     /// <typeparam name="T">The underlying type of the <see cref="Settable{T}" />.</typeparam>
-    public struct Settable<T> : ISettable {
+    [Serializable]
+    public readonly struct Settable<T> : ISettable, IEquatable<Settable<T>> {
 
         /// <summary>
         /// Constructs a new <see cref="Settable{T}" /> with the given value. Property <see cref="IsSet" /> is <see
@@ -59,8 +60,11 @@ namespace Hafner.Tools {
         }
 
         public override bool Equals([NotNullWhen(true)] object? obj) {
-            if (obj is null) return false;
             if (obj is not Settable<T> other) return false;
+            return Equals(other);
+        }
+
+        public bool Equals(Settable<T> other) {
             if (IsSet != other.IsSet) return false;
             if (!IsSet) return true;
             return Object.Equals(Value, other.Value);
@@ -74,6 +78,14 @@ namespace Hafner.Tools {
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly T? _value;
+
+        public static bool operator ==(Settable<T> left, Settable<T> right) {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Settable<T> left, Settable<T> right) {
+            return !left.Equals(right);
+        }
 
     }
 

@@ -8,7 +8,7 @@ namespace Hafner.Tools {
 
     public static partial class SettableExtensionForDapper {
 
-        [return: NotNullIfNotNull("connection")]
+        [return: NotNullIfNotNull(nameof(connection))]
         public static IDbConnection? EnsureSettableConvertersLoaded(this IDbConnection? connection) {
             LoadConverters();
             return connection;
@@ -38,7 +38,7 @@ namespace Hafner.Tools {
             LoadDateTimeOnlyIfAvailable();
         }
 
-        private class DummyHandler : ITypeHandler {
+        private sealed class DummyHandler : ITypeHandler {
 
             public object Parse(Type destinationType, object value) {
                 throw new NotImplementedException();
