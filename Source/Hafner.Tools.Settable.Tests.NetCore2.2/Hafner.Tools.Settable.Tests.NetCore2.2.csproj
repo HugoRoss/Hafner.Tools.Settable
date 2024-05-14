@@ -9,6 +9,7 @@
     <RootNamespace>Hafner.Tools.Settable.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
     <Configurations>Debug</Configurations>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

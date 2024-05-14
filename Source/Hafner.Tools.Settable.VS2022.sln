@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hafner.Tools.Settable.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hafner.Tools.Settable.Tests.NetCore3.1", "Hafner.Tools.Settable.Tests.NetCore3.1\Hafner.Tools.Settable.Tests.NetCore3.1.csproj", "{B98E51D2-B8AD-4B74-8438-8D2C3D5BB6BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafner.Tools.Settable.Tests.Net8.0", "Hafner.Tools.Settable.Tests.Net8.0\Hafner.Tools.Settable.Tests.Net8.0.csproj", "{3BA66178-0A2E-4EFF-968A-6D3FC262B404}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hafner.Tools.Settable.Tests.Net8.0", "Hafner.Tools.Settable.Tests.Net8.0\Hafner.Tools.Settable.Tests.Net8.0.csproj", "{3BA66178-0A2E-4EFF-968A-6D3FC262B404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hafner.Tools.Settable.Tests.Net9.0", "Hafner.Tools.Settable.Tests.Net9.0\Hafner.Tools.Settable.Tests.Net9.0.csproj", "{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -192,6 +194,12 @@ Global
 		{3BA66178-0A2E-4EFF-968A-6D3FC262B404}.NuGet|Any CPU.Build.0 = Debug|Any CPU
 		{3BA66178-0A2E-4EFF-968A-6D3FC262B404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BA66178-0A2E-4EFF-968A-6D3FC262B404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}.NuGet|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}.NuGet|Any CPU.Build.0 = Debug|Any CPU
+		{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C6EAA8-273C-4CC7-A4FF-487A3F56176B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,8 +31,8 @@ namespace Hafner.Tools {
         /// <exception cref="InvalidOperationException">An <see cref="InvalidOperationException"/> is thrown if no value was set.</exception>
         public T? Value {
             get {
-                if (!IsSet) throw new InvalidOperationException($"No value was set, please check with property '{nameof(IsSet)}' before accessing this property!");
-                return _value;
+                if (IsSet) return _value;
+                throw new InvalidOperationException($"No value was set, please check with property '{nameof(IsSet)}' before accessing this property!");
             }
         }
 

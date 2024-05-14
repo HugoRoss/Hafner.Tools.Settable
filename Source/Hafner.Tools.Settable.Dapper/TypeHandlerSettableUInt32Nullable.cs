@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hafner.Tools {
+﻿namespace Hafner.Tools {
 
     public class TypeHandlerSettableUInt32Nullable : TypeHandlerSettable<uint?> {
 
